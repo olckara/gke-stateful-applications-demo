@@ -74,7 +74,7 @@ spec:
       terminationGracePeriodSeconds: 1800
       containers:
       - name: cassandra
-        image: gcr.io/pso-examples/cassandra:3.11.3-v22
+        image: gcr.io/pso-examples/cassandra:3.11.3-cqlsh-v31
         imagePullPolicy: Always
         ports:
         - containerPort: 7000
@@ -119,11 +119,11 @@ spec:
           - name: CASSANDRA_SEEDS
             value: "cassandra-0.cassandra.default.svc.cluster.local"
           - name: CASSANDRA_CLUSTER_NAME
-            value: "K8Demo"
+            value: "ie-cassandra-stg"
           - name: CASSANDRA_DC
-            value: "DC1-K8Demo"
+            value: "DC1-ie-cassandra"
           - name: CASSANDRA_RACK
-            value: "Rack1-K8Demo"
+            value: "Rack1-ie-cassandra"
           # we are using the downward api to allow the pod get the correct
           # IP address.
           # See https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
@@ -159,7 +159,7 @@ spec:
       name: cassandra-data
       annotations:
         # StorageClass is contained in his demo as well
-        volume.beta.kubernetes.io/storage-class: fast
+        volume.beta.kubernetes.io/storage-class: ie-cassandra-sc
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
